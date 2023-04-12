@@ -1,0 +1,11 @@
+{
+  "name": "counterapp",
+  "version": "1.0.0",
+  "description": "this the counterapp webapp",
+  "main": "app.js",
+  "scripts": {
+    "test": "node app.js"
+  },
+  "author": "",
+  "license": "ISC"
+}
