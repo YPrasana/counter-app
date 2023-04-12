@@ -1,0 +1,21 @@
+{
+  "dependencies": {
+    "ejs": "^3.1.9",
+    "express": "^4.18.2",
+    "init": "^0.1.2",
+    "mysql": "^2.18.1"
+  },
+  "name": "counter-app",
+  "description": "install the following packages in your Node.js project directory:\r  1.npm init -y\r  2.express - This is a popular Node.js web framework that makes it easy to handle HTTP requests and responses. You can install it using the following command:\r  npm install express\r  3.mysql - This is a Node.js library for connecting to and interacting with MySQL databases. You can install it using the following command:\r  npm install mysql\r  4.ejs - This is a templating engine that allows you to render dynamic HTML pages. You can install it using the following command:\r  npm install ejs\r  5.node app.js",
+  "version": "1.0.0",
+  "main": "app.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "PrasanaY",
+  "license": "ISC"
+}
