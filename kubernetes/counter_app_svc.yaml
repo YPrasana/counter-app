@@ -1,0 +1,15 @@
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: counter-app-service
+  labels:
+    app: counter-app
+spec:
+  selector:
+    app: counter-app
+  ports:
+    - protocol: TCP
+      port: 3000
+      targetPort: 3086
+  type: LoadBalancer
