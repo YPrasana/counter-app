@@ -1,5 +1,4 @@
-const express = require('express');
-const app = express();
+
 const mysql = require('mysql');
 const ejs = require('ejs');
 const path = require("path");
