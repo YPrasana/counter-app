@@ -6,61 +6,95 @@ const path = require("path");
 
 
 const connection = mysql.createConnection({
-  host: '10.102.173.52',
+  host: '127.0.0.1',
   user: 'admin', // Your MySQL username
   password: 'admin123', // Your MySQL password
   database: 'test' // Your MySQL database name
 });
+const mysql = require('mysql');
 
-let count = 0;
+const connection = mysql.createConnection({
+  host: process.env.MYSQL_HOST,
+  user: process.env.MYSQL_USER,
+  password: process.env.MYSQL_PASSWORD,
+  database: process.env.MYSQL_DATABASE
+});
 
-
-// Create counter table if not exists
-connection.query(
-  "CREATE TABLE IF NOT EXISTS counter (count INT(11) NOT NULL)",
-  (error, results, fields) => {
-    if (error) throw error;
+connection.connect((err) => {
+  if (err) {
+    console.error('Error connecting to database:', err.message);
+    return;
   }
-);
 
-app.use(express.urlencoded({ extended: true }));
-app.use(express.json());
-app.use(express.static(path.join(__dirname, "public")));
+  console.log('Connected to database');
+});
 
-app.get("/", (req, res) => {
-  connection.query(
-    "SELECT count FROM counter",
-    (error, results, fields) => {
-      if (error) throw error;
-      const count = results.length > 0 ? results[0].count : 0;
-      res.render("index", { count });
+let data = 0;
+connection.connect((err) => {
+    if (err) {
+      console.error('Error connecting to database:', err);
+      return;
     }
-  );
-});
+  
+    console.log('Connected to database');
+  
+    connection.query('SELECT count FROM counter', (err, results) => {
+      if (err) {
+        console.error('Error retrieving count from database:', err);
+        return;
+      }
+  
+      data = results[0].count;
+      counting.innerText = data;
+    });
+  
+    server.listen(3000, () => {
+      console.log('Server running on port 3000');
+    });
+  });
+  
+(error));
+  
+ 
 
-app.get("/increment", (req, res) => {
-  connection.query(
-    "UPDATE counter SET count = count + 1",
-    (error, results, fields) => {
-      if (error) throw error;
-      res.redirect("/");
+function increment() {
+  data++;
+  counting.innerText = data;
+
+  connection.query(`UPDATE counter SET count = ${data}`, (err, results) => {
+    if (err) {
+      console.error('Error updating count in database:', err);
+      return;
     }
-  );
-});
 
-app.get("/decrement", (req, res) => {
-  connection.query(
-    "UPDATE counter SET count = count - 1",
-    (error, results, fields) => {
-      if (error) throw error;
-      res.redirect("/");
+    console.log('Count updated in database');
+  });
+
+  fetch('/increment')
+    .then(response => response.json())
+    .then(result => {
+      console.log(result);
+    })
+    .catch(error => console.error(error));
+}
+
+function decrement() {
+  data--;
+  counting.innerText = data;
+
+  connection.query(`UPDATE counter SET count = ${data}`, (err, results) => {
+    if (err) {
+      console.error('Error updating count in database:', err);
+      return;
     }
-  );
-});
 
-app.set("views", path.join(__dirname, "views"));
-app.set("view engine", "ejs");
+    console.log('Count updated in database');
+  });
 
-app.listen(3000, () => {
-  console.log("Server started on port 3000");
-});
+  fetch('/decrement')
+    .then(response => response.json())
+    .then(result => {
+      console.log(result);
+    })
+    .catch(error => console.error(error));
+}
