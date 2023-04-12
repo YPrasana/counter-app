@@ -1,15 +1,22 @@
 <!DOCTYPE html>
 <html>
-<head>
-  <meta charset="utf-8">
-  <title>Counter</title>
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-  <h1>Counter: <%= count %></h1>
-  <div class="buttons">
-    <a href="/increment">+</a>
-    <a href="/decrement">-</a>
-  </div>
-</body>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+        <link rel="stylesheet" type="text/css" href="style.css">
+    </head>
+    <body>
+        <!-- giving a suitable heading using h1 tag -->
+        <h1>Incremental and Decremental Counter</h1>
+        <div class="container">
+          <div class="counter">
+            <!-- adding buttons to and heading to show the digits-->
+            <!-- increment() and decrement() functions on button click-->
+            <button onclick="increment()">+</button>
+            <p>Current count: <span id="counting"></span></p>
+            <button onclick="decrement()">-</button>
+          </div>
+             
+       
+        <script src="script.js"></script>
+    </body>
 </html>
