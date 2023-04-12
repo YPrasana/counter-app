@@ -1,0 +1,30 @@
+stages:
+  - build
+  - deploy
+
+build:
+  stage: build
+  image: node:14-alpine
+  script:
+    - git clone git@github.com:YPrasana/counter-app.git
+    - cd web-app/src/
+    - npm install
+    - npm run build
+  artifacts:
+    paths:
+      - build/
+  only:
+    - master
+  tags:
+    - counter_runner
+deploy:
+  stage: deploy
+  image: amazon/aws-cli
+  script:
+    - aws s3 sync . s3://web_bucket --delete --exclude '.git/*'
+    - aws s3 cp s3://web_bucket/ - | tr '[:lower:]' '[:upper:]' | aws s3 cp - s3://web_bucket/ --recursive
+    - aws autoscaling start-instance-refresh --auto-scaling-group-name nginx_asg --strategy Rolling --preferences "MinHealthyPercentage=75,InstanceWarmup=60"
+  only:
+    - master
+  tag:
+    - counter_runner
